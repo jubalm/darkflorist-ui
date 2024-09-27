@@ -1,0 +1,95 @@
+
+body {
+  background-color: var(--bg-color);
+  min-height: 100vh;
+  min-width: 100vw;
+  color: var(--text-color);
+  display: grid;
+  place-items: center;
+}
+
+.resizer {
+  resize: horizontal;
+  overflow: scroll;
+  padding: 1rem;
+  width: fit-content;
+  border: 1px solid orange;
+  position: relative;
+}
+
+.actions-settings {
+  display: grid;
+  grid-template-columns: min-content auto;
+  column-gap: 0.5rem;
+}
+
+/* -- Address Card -- */
+.address-card {
+  --bg-color: #444;
+  --bg-padding: 4px;
+  --image-size: 1em;
+
+  font: inherit;
+  display: inline-grid;
+  align-items: end;
+  grid-template-columns: [start] min-content [copy] minmax(3ch, min-content)[end];
+  grid-template-rows: [start] min-content [end];
+  column-gap: 0.25rem;
+  vertical-align: bottom;
+
+  background: var(--bg-color);
+  border: var(--bg-padding) solid var(--bg-color);
+  border-radius: 0.25em;
+
+  data { line-height: 1em; } 
+  button { 
+    white-space: nowrap; 
+    border: 0 none;
+    padding: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 1.25em;
+    padding-inline: 0.25em;
+    border-radius: 0.125em;
+    cursor: pointer;
+  }
+
+  /* -- Icon -- */
+  > :has(svg, img) {
+    grid-column: start / copy;
+    font-size: var(--image-size);
+    line-height: 1rem;
+    outline: 1px solid hsl(0deg 0% 100% / 10%);
+
+    svg, img { 
+      display: inline-block; 
+      vertical-align: text-bottom;
+    }
+  }
+
+  /* -- Text -- */
+  > data {
+    grid-row: start / end;
+    grid-column: copy / end;
+  }
+
+  /* -- Buttons -- */
+  > :has(button) {
+    display: none;
+    grid-row: start / end;
+    grid-column: copy / end;
+    column-gap: 0.25rem;
+    overflow-x: scroll;
+
+    grid-template-columns: minmax(3ch, min-content);
+    grid-auto-columns: min-content;
+    grid-auto-flow: column;
+    align-items: end;
+  }
+
+  &:hover {
+    > data { visibility: hidden; }
+    > :has(button) { display: inline-grid; }
+  }
+}
