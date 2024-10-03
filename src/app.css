@@ -32,7 +32,7 @@ body {
   font: inherit;
   display: inline-grid;
   align-items: end;
-  grid-template-columns: [start] min-content [copy] minmax(3ch, min-content)[end];
+  grid-template-columns: [start] min-content [copy] minmax(0, min-content)[end];
   grid-template-rows: [start] min-content [end];
   column-gap: 0.25rem;
   vertical-align: bottom;
@@ -80,9 +80,9 @@ body {
     grid-row: start / end;
     grid-column: copy / end;
     column-gap: 0.25rem;
-    overflow-x: scroll;
+    overflow-x: hidden;
 
-    grid-template-columns: minmax(3ch, min-content);
+    grid-template-columns: minmax(0, min-content);
     grid-auto-columns: min-content;
     grid-auto-flow: column;
     align-items: end;
