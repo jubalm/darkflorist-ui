@@ -1,20 +1,33 @@
-import { CSSProperties } from 'preact/compat'
-import { ComponentChildren, JSX } from 'preact'
-import { Blockie } from './SVGBlockie'
+import { CSSProperties, JSX } from 'preact/compat'
+import { useCallback, useRef } from 'preact/hooks'
 import { toEthereumAddress } from '../utils/ethereum'
 
-export const AddressCard = ({ address, style, children }: { address: bigint, style?: CSSProperties, children: ComponentChildren }) => {
+type AddressCardProps = {
+  icon: () => JSX.Element
+  address: bigint,
+  style?: CSSProperties,
+  onClick?: (address: string) => void
+}
+
+export const AddressCard = ({ icon: Icon, address, onClick, style }: AddressCardProps) => {
+  const dataRef = useRef<HTMLDataElement>(null)
   const addressString = toEthereumAddress(address)
+
+  const handleClick = useCallback(() => {
+    if (!dataRef.current) return
+    console.log(dataRef.current.value)
+    onClick?.(dataRef.current.value)
+  }, [dataRef])
+
   return (
     <span class='address-card' role='figure' style={style}>
-      <span><Blockie address={address} /></span>
-      <data class='truncate text-legible' value={addressString}>{addressString}</data>
-      <span>
-        <data class='truncate text-legible' value={addressString}>{addressString}</data>
-        {children}
-      </span>
+      <Icon />
+      <data ref={dataRef} class='truncate text-legible' value={addressString}>{addressString}</data>
+      <button value='copy' onClick={handleClick}>
+        <Icon />
+        <data class = 'truncate text-legible' value={addressString}>{addressString}</data>
+        <span>Copy</span>
+      </button>
     </span>
   )
 }
-
-AddressCard.Action = ({ onClick, children }: JSX.IntrinsicElements['button']) => <button type='button' onClick={onClick}>{children}</button>
