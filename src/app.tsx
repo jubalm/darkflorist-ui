@@ -10,7 +10,7 @@ export function App() {
   const addressBigInt = BigInt(address)
 
   const addressProps:Parameters<typeof AddressCard>[0] = { 
-    address: addressBigInt,
+    label: address,
     icon: () => <Blockie address={addressBigInt} />
    }
 
@@ -24,11 +24,18 @@ export function App() {
       <p style={{ color: '#aaa', marginBottom: '0.5em', marginTop: '2em' }}>Example with constrained widths</p>
       <Resizer>
         <p>
-          <AddressCard {...addressProps} onClick={alert} style={{ maxWidth: '20ch' }} />{ " " }
-          is sending to {" "}
-          <AddressCard {...addressProps} onClick={alert} style={{ maxWidth: '10ch' }} />{ " " }
-          via{" "}
-          <AddressCard {...addressProps} onClick={alert} style={{ maxWidth: '5ch' }} />
+          <AddressCard label='lll' icon={addressProps.icon} onClick={alert} />{ " " }
+          <AddressCard label='ETH' icon={addressProps.icon} onClick={alert} />{ " " }
+          <AddressCard label='USDT' icon={addressProps.icon} onClick={alert} />{ " " }
+        </p>
+      </Resizer>
+
+      <p style={{ color: '#aaa', marginBottom: '0.5em', marginTop: '2em' }}>Vertical spacing when wrapped</p>
+      <Resizer style={{ maxWidth: '50ch' }}>
+        <p>
+          <AddressCard {...addressProps} onClick={alert} />
+          <AddressCard {...addressProps} onClick={alert} />
+          <AddressCard {...addressProps} onClick={alert} />
         </p>
       </Resizer>
     </div>

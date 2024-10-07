@@ -33,12 +33,12 @@ body {
   column-gap: 0.5rem;
 }
 
-/* -- Address Card -- */
-.address-card {
+.inline-card {
   --bg-color: #444;
   --text-color: white;
-  --text-muted-color: #ddd; 
-  --bg-padding: 2px;
+  --text-hilited-color: #3cd2d9;
+  --text-muted-color: #888; 
+  --bg-padding: 4px;
   --image-size: 1em;
 
   font: inherit;
@@ -47,75 +47,92 @@ body {
   grid-template-columns: [start] minmax(0, min-content) [copy] minmax(0, min-content) [end];
   grid-template-rows: [start] min-content [end];
   vertical-align: baseline;
-
+  margin-block: 1px;
   background: var(--bg-color);
-  outline: var(--bg-padding) solid var(--bg-color);
-  padding-inline: var(--bg-padding);
-  border-radius: 0.05em;
+  padding: 1px 4px;
+  border-radius: 0.15em;
 
   data { 
     line-height: 1em; 
     color: var(--text-color);
     background: var(--bg-color);
     padding-inline: 0.25em;
+    text-align: center;
+    min-width: 5.5ch;
   } 
 
-  svg, img { 
-    font-size: var(--image-size);
-    transform: translateY(0.1rem);
+  svg, img { font-size: var(--image-size); }
+
+  [role=img] :only-child {
+    display: inline-block;
+    vertical-align: -0.15em;
   }
 
-  > svg, > img {
+  [role=menuitem] {
+    appearance: none;
+    background: var(--bg-color);
+    border: 0 none;
+    outline: 1px solid var(--text-muted-color);
+    color: var(--text-muted-color);
+    border-radius: 3px;
+    padding-inline: 0.25em;
+    vertical-align: text-bottom;
+    margin-inline: 0.175em;
+    cursor: pointer;
+
+    svg { 
+      display: inline-block;
+      vertical-align: -0.125em;
+    }
+
+    span { 
+      display: none;
+      text-transform: uppercase;
+      font-weight: bold;
+      font-size: 0.8em;
+      vertical-align: 0.05em;
+      padding-block: 0.125em;
+    }
+
+    &:hover, &:focus {
+      color: var(--text-hilited-color);
+      outline-color: var(--text-hilited-color);
+      svg { display: none }
+      span { display: inline-block }
+    }
+  }
+
+  > [role=img] {
     grid-column: start / copy;
     grid-row: start / end;
   }
 
-  /* -- Text -- */
   > data {
     grid-row: start / end;
     grid-column: copy / end;
-    transform: scale(1);
   }
 
-  /* -- Action -- */
-  > button[value=copy] {
-    display: none;
-    /* display: inline-grid; */
+  > :has([role=menu]) {
+    opacity: 0;
 
-    font: inherit;
-    appearance: none;
     background: var(--bg-color);
-    border: 0 none;
-    padding: 0;
     cursor: pointer;
 
-    grid-row: start / end;
-    grid-column: start / end;
-
-    grid-template-columns: minmax(0,auto) minmax(0,auto) auto;
+    display: inline-grid;
+    grid-area: start / start / end / end;
+    grid-template-columns: minmax(0, min-content) 1fr;
     align-items: baseline;
 
-    > span {
-      transform: scale(1);
-      background: var(--bg-color);
-      white-space: nowrap; 
-      padding-inline: 0.25rem;
-      border-radius: 0.25em;
-      font-size: 0.5em;
-      padding-block: 0.25em;
-      text-transform: uppercase;
-      align-self: self-end;
+    [role=menu] {
+      display: inline-grid;
+      grid-template-columns: minmax(0, min-content) 1fr;
+      align-items: baseline;
 
-      outline: 1px solid color(from var(--text-muted-color) srgb r g b / 0.25);
-      color: var(--text-muted-color);
+      > span { white-space: nowrap }
     }
   }
 
-  &:hover, &:focus {
-    --bg-color: #555;
-    > data { visibility: hidden; }
-    > button[value=copy] { 
-      display: inline-grid; 
-    }
+  &:hover, &:focus-within {
+    > :has([role=menu]) { opacity: 1 }
   }
 }
