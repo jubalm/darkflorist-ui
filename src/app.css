@@ -35,9 +35,6 @@ body {
 
 .inline-card {
   --bg-color: #444;
-  --text-color: white;
-  --text-hilited-color: #3cd2d9;
-  --text-muted-color: #888; 
   --bg-padding: 4px;
   --image-size: 1em;
 
@@ -55,7 +52,6 @@ body {
   data { 
     line-height: 1em; 
     color: var(--text-color);
-    background: var(--bg-color);
     padding-inline: 0.25em;
     text-align: center;
     min-width: 5.5ch;
@@ -63,22 +59,19 @@ body {
 
   svg, img { font-size: var(--image-size); }
 
-  [role=img] :only-child {
-    display: inline-block;
-    vertical-align: -0.15em;
-  }
-
-  [role=menuitem] {
+  button {
+    font: inherit;
+    font-size: 0.9em;
     appearance: none;
-    background: var(--bg-color);
+    background: hsl(250deg 10% 50% / 80%);
     border: 0 none;
-    outline: 1px solid var(--text-muted-color);
-    color: var(--text-muted-color);
+    color: var(--text-color);
     border-radius: 3px;
-    padding-inline: 0.25em;
+    padding: 0 0.25em;
     vertical-align: text-bottom;
-    margin-inline: 0.175em;
+    margin-left: 0.25em;
     cursor: pointer;
+
 
     svg { 
       display: inline-block;
@@ -95,11 +88,18 @@ body {
     }
 
     &:hover, &:focus {
-      color: var(--text-hilited-color);
-      outline-color: var(--text-hilited-color);
+      color: black;
+      background-color: hsl(0deg 100% 100% / 80%);
+      outline: none;
+
       svg { display: none }
       span { display: inline-block }
     }
+  }
+
+  [role=img] :only-child {
+    display: inline-block;
+    vertical-align: -0.15em;
   }
 
   > [role=img] {
@@ -112,27 +112,30 @@ body {
     grid-column: copy / end;
   }
 
-  > :has([role=menu]) {
+  > [role=menu] {
     opacity: 0;
 
     background: var(--bg-color);
-    cursor: pointer;
 
     display: inline-grid;
     grid-area: start / start / end / end;
-    grid-template-columns: minmax(0, min-content) 1fr;
+    grid-template-columns: minmax(0, max-content) max-content;
     align-items: baseline;
 
-    [role=menu] {
-      display: inline-grid;
-      grid-template-columns: minmax(0, min-content) 1fr;
-      align-items: baseline;
-
-      > span { white-space: nowrap }
-    }
+    &:hover, &:focus-within { opacity: 1 }
   }
 
-  &:hover, &:focus-within {
-    > :has([role=menu]) { opacity: 1 }
+  [role=menuitem]:not(button) {
+    display: grid;
+    grid-template-columns: minmax(0, min-content) 1fr min-content;
+    align-items: baseline;
+    cursor: pointer;
+
+    > :has(data) { overflow: hidden }
+
+    &:hover button {
+      svg { display: none }
+      span { display: inline-block }
+    }
   }
 }
