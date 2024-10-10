@@ -35,43 +35,44 @@ body {
 
 .inline-card {
   --bg-color: #444;
-  --bg-padding: 4px;
+  --bg-padding: 0 4px;
   --image-size: 1em;
+  --min-text-width: 5.5ch;
 
   font: inherit;
   display: inline-grid;
   align-items: baseline;
   grid-template-columns: [start] minmax(0, min-content) [copy] minmax(0, min-content) [end];
   grid-template-rows: [start] min-content [end];
-  vertical-align: baseline;
+
   margin-block: 1px;
+  padding: var(--bg-padding);
   background: var(--bg-color);
-  padding: 1px 4px;
+  border: 1px solid transparent;
   border-radius: 0.15em;
+  min-width: calc(var(--image-size) + var(--min-text-width));
 
   data { 
     line-height: 1em; 
     color: var(--text-color);
     padding-inline: 0.25em;
     text-align: center;
-    min-width: 5.5ch;
+    min-width: var(--min-text-width);
   } 
 
   svg, img { font-size: var(--image-size); }
 
   button {
-    font: inherit;
-    font-size: 0.9em;
     appearance: none;
+    font-size: 0.9em;
     background: hsl(250deg 10% 50% / 80%);
-    border: 0 none;
     color: var(--text-color);
+    border: 0 none;
     border-radius: 3px;
     padding: 0 0.25em;
     vertical-align: text-bottom;
     margin-left: 0.25em;
     cursor: pointer;
-
 
     svg { 
       display: inline-block;
@@ -125,7 +126,7 @@ body {
     &:hover, &:focus-within { opacity: 1 }
   }
 
-  [role=menuitem]:not(button) {
+  [role=menuitem] {
     display: grid;
     grid-template-columns: minmax(0, min-content) 1fr min-content;
     align-items: baseline;

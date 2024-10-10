@@ -1,5 +1,5 @@
 import './app.css'
-import { InlineCard, InlineCardSelectValue } from './components/AddressCard'
+import { InlineCard, InlineCardSelectValue } from './components/InlineCard'
 import { Resizer } from './components/Resizer'
 import { Blockie } from './components/SVGBlockie'
 import { generateEthereumAddress } from './utils/ethereum'

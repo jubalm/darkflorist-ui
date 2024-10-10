@@ -8,14 +8,14 @@ export type InlineCardSelectValue = {
   value: string 
 }
 
-export type AddressCardProps = {
+export type InlineCardProps = {
   icon: () => JSX.Element
   label: string,
   style?: CSSProperties,
   onSelect?: (selection: InlineCardSelectValue) => void
 }
 
-export const InlineCard = ({ icon: Icon, label, onSelect, style }: AddressCardProps) => {
+export const InlineCard = ({ icon: Icon, label, onSelect, style }: InlineCardProps) => {
   const dataRef = useRef<HTMLDataElement>(null)
 
   const isValidAction = (action: string): action is InlineCardSelectValue['action'] => cardActions.some(a => a === action)
