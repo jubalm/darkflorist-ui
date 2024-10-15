@@ -18,7 +18,6 @@ export function App() {
 
   const handleAddressClick = (returnValue: InlineCardSelectValue) => {
     if (returnValue.action === 'copy') {
-      alert(`Copied ${returnValue.value} to clipboard.`)
       return
     }
 
