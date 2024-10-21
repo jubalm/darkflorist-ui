@@ -5,7 +5,7 @@ import { Blockie } from "~/components/SVGBlockie";
 import { InlineCard } from "~/components/InlineCard";
 
 
-export const SmallAddressDemo = () => {
+export const DemoPage = () => {
 
   const address = generateEthereumAddress()
   const addressBigInt = BigInt(address)
