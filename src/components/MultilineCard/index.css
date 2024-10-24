@@ -1,0 +1,51 @@
+.multiline-card {
+	--bg-color: #444;
+	--button-color: #77738ccc;
+	--button-color-hilite: white;
+	--bg-inline-padding: 4px;
+	--bg-block-padding: 1px;
+	--image-size: 2em;
+	--min-text-width: 5.5ch;
+	--status-backdrop-color: #303030ed;
+	--status-success-color: #4fb64f;
+
+	font: inherit;
+	display: inline-grid;
+	align-items: baseline;
+	grid-template-columns: min-content minmax(0, max-content);
+
+	data {
+		line-height: 1em;
+		color: var(--text-color);
+		padding-inline: 0.25em;
+		text-align: center;
+		min-width: var(--min-text-width);
+		pointer-events: none;
+	}
+
+	svg, img { font-size: var(--image-size); }
+
+	[role=img] :only-child {
+		display: inline-block;
+		vertical-align: -0.15em;
+	}
+
+	button {
+		font: inherit;
+		background: transparent;
+		border: 0 none;
+		padding: 0;
+
+		display: inline-grid;
+		grid-template-columns: [start] minmax(0,1fr) [icon] min-content [end];
+		grid-template-rows: [start] min-content [end];
+		align-items: baseline;
+
+		:has(data) {
+		}
+
+		:has(svg):has(span) {
+			span { display: none; }
+		}
+	}
+}

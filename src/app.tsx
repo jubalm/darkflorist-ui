@@ -1,7 +1,7 @@
 import { HashRouter, Route } from '~/HashRouter'
 import { Home } from '~/components/Home'
 import { DemoPage as SmallAddressDemo } from '~/components/InlineCard/demo'
-import { DemoPage as BigAddressDemo } from '~/components/BigAddress/demo'
+import { DemoPage as BigAddressDemo } from '~/components/MultilineCard/demo'
 import './app.css'
 
 export function App() {
