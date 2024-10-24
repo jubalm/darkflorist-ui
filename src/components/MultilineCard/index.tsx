@@ -13,7 +13,7 @@ export type MultilineCardProps = {
 	statusMessageDuration?: number
 }
 
-export const MultilineCard = ({ icon: Icon, label, copyValue, onEditClicked, style, statusMessageDuration = 1500 }: MultilineCardProps) => {
+export const MultilineCard = ({ icon: Icon, label, copyValue, style, statusMessageDuration = 1500 }: MultilineCardProps) => {
 	const copyStatus = useSignal(false)
 
 	const copyTextToClipboard = async (event: JSX.TargetedMouseEvent<HTMLButtonElement>) => {
