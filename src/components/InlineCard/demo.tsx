@@ -16,7 +16,14 @@ export const DemoPage = () => {
 
 	return (
 		<Layout>
-			<p style = { { color: '#aaa', marginBottom: '0.5em' } }>Address inline with text</p>
+			<p style = { { color: '#aaa', marginBottom: '0.5em', marginTop: '2em' } }>Vertical spacing when wrapped</p>
+			<Resizer style = { { maxWidth: '50ch' } }>
+				<p>
+					<InlineCard { ...addressProps } warningMessage = 'This is an untrusted address!' />
+				</p>
+			</Resizer>
+
+			<p style = { { color: '#aaa', marginBottom: '0.5em', marginTop: '2em' } }>Address inline with text</p>
 			<Resizer>
 				<p>Example address inline with text <InlineCard { ...addressProps } /> within a paragraph.</p>
 			</Resizer>
