@@ -11,5 +11,5 @@ export const Layout = ({ children }: { children: ComponentChildren }) => {
 
 const BackButton = () => {
   if (!window.location.hash) return null
-  return <a class='btn btn--outline' style={{ position: 'absolute', top: 10, left: 10 }} href='/'>&larr; Back</a>
+  return <a class='btn btn--outline' style={{ position: 'absolute', top: 10, left: 10 }} href='#'>&larr; Back</a>
 }

@@ -1,24 +1,44 @@
+import { generateName } from '~/utils/names'
 import { generateEthereumAddress } from '~/utils/ethereum'
 import { Layout } from '~/components/Layout'
 import { Resizer } from '~/components/Resizer'
 import { Blockie } from '~/components/SVGBlockie'
 import { MultilineCard } from '~/components/MultilineCard'
+import { EditIcon } from '~/components/Icons'
 
 export const DemoPage = () => {
 
 	const address = generateEthereumAddress()
 	const addressBigInt = BigInt(address)
 
-	const addressProps: Parameters<typeof MultilineCard>[0] = {
-		label: address,
-		icon: () => <Blockie address = { addressBigInt } />,
-	}
-
 	return (
 		<Layout>
-			<p style = { { color: '#aaa', marginBottom: '0.5em' } }>Address inline with text</p>
+			<p style = { { color: '#aaa', marginBottom: '0.5em' } }>Known address</p>
 			<Resizer>
-				<MultilineCard { ...addressProps } />
+				<MultilineCard
+					label = { { 
+						displayText: generateName(),
+						action: {
+							label: 'Edit',
+							icon: () => <EditIcon />,
+							onClick: () => alert('Editing...')
+						}
+					} }
+					note = { {
+						displayText: address,
+						value: address
+					} }
+					icon = { { component: () => <Blockie address = { addressBigInt } /> } }
+				/>
+			</Resizer>
+
+			<p style = { { color: '#aaa', marginBottom: '0.5em', marginTop: '2rem' } }>Unknown address</p>
+			<Resizer>
+				<MultilineCard 
+					label = { { displayText: address } }
+					note = { { displayText: '(Not in addressbook)', action: { label: 'Edit', icon: () => <EditIcon />, onClick: () => { alert('Adding...') } } } } 
+					icon = { { component: () => <Blockie address = { addressBigInt } /> } } 
+				/>
 			</Resizer>
 		</Layout>
 	)

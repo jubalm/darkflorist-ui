@@ -1,60 +1,96 @@
 import { JSX } from 'preact/jsx-runtime'
-import { useSignal, useSignalEffect } from '@preact/signals'
+import { useSignal } from '@preact/signals'
 import { clipboardCopy } from '~/utils/copy-to-clipboard.js'
-import { CheckIcon, CopyIcon, EditIcon } from '~/components/Icons'
 import './index.css'
+import { Tooltip, TooltipConfig } from '../Tooltip'
+import { CopyIcon } from '../Icons'
+import { deepMerge } from '~/utils/objects'
 
-export type MultilineCardProps = {
-	icon: () => JSX.Element
-	label: string
-	copyValue?: string
-	style?: JSX.CSSProperties
-	onEditClicked?: JSX.MouseEventHandler<HTMLButtonElement>
-	statusMessageDuration?: number
+export type CardIcon = {
+	component: () => JSX.Element
+	onClick?: () => void
+	tooltipText?: string
 }
 
-export const MultilineCard = ({ icon: Icon, label, copyValue, style, statusMessageDuration = 1500 }: MultilineCardProps) => {
-	const copyStatus = useSignal(false)
+export type MultilineCardProps = {
+	icon: CardIcon
+	label: ActionableTextProps
+	note: ActionableTextProps
+	style?: JSX.CSSProperties
+}
+
+export const MultilineCard = ({ icon, label, note, style }: MultilineCardProps) => {
+	const tooltipConfig = useSignal<TooltipConfig | undefined>(undefined)
 
 	const copyTextToClipboard = async (event: JSX.TargetedMouseEvent<HTMLButtonElement>) => {
 		event.currentTarget.blur()
-		await clipboardCopy(event.currentTarget.value || label)
-		copyStatus.value = true
+		console.log(event.currentTarget.value)
+		await clipboardCopy(event.currentTarget.value)
+		tooltipConfig.value = { message: 'Copied!', x: event.clientX, y: event.clientY }
 	}
 
-	useSignalEffect(() => {
-		if (copyStatus.value !== true) return
-		setTimeout(() => copyStatus.value = false, statusMessageDuration)
-	})
+	const CardIcon = icon.component
+	const defaultAction:TextAction = { label: 'Copy', icon: () => <CopyIcon />, onClick: copyTextToClipboard }
 
 	return (
 		<>
-			<figure class = 'multiline-card' role = 'figure' style = { style } title = { label }>
-				<span role = 'img'><Icon /></span>
-				<span>
-					<span>
-						<data class = 'truncate text-legible' value = 'eth' >eth</data>
-						<button type = 'button' onClick = { copyTextToClipboard } value = { copyValue } tabIndex = { 1 }>
-							<span><data class = 'truncate text-legible' value = 'eth' >eth</data></span>
-							<span>
-								<EditIcon />
-								<span>Edit</span>
-							</span>
-						</button>
-					</span>
-					<span>
-						<data class = 'truncate text-legible' value = 'eth' >{ label }</data>
-						<button type = 'button' onClick = { copyTextToClipboard } value = { copyValue } tabIndex = { 1 }>
-							<span><data class = 'truncate text-legible' value = { label }>{label}</data></span>
-							<span>
-								<CopyIcon />
-								<span>copy</span>
-							</span>
-						</button>
-					</span>
+			<figure class = 'multiline-card' role = 'figure' style = { style }>
+				<span role = 'img'>
+					<button type = 'button' onClick = { icon.onClick || copyTextToClipboard } tabIndex = { -1 } title = { icon.tooltipText || label.displayText }><CardIcon /></button>
 				</span>
-				{ copyStatus.value ? <span role='status'><CheckIcon /><span>Copied!</span></span> : <></> }
+				<ActionableText { ...label } action = { deepMerge(defaultAction, label.action || {}) } />
+				<ActionableText { ...note } action = { deepMerge(defaultAction, note.action || {}) } />
 			</figure>
+			<Tooltip config = { tooltipConfig }  />
 		</>
 	)
 }
+
+type TextAction = {
+	label: string
+	icon: () => JSX.Element
+	onClick?: JSX.MouseEventHandler<HTMLButtonElement>
+}
+
+type ActionableTextProps = {
+	displayText: string
+	value?: string
+	action?: TextAction
+}
+
+type TextNodeProps = { 
+	displayText: string,
+	value: string
+}
+
+const TextNode = ({ displayText, value }: TextNodeProps) => <data class = 'truncate text-legible' value = { value || displayText }>{ displayText }</data>
+
+const ActionableText = ({ displayText, value, action }: ActionableTextProps) => {
+	const DisplayText = () => <TextNode displayText = { displayText } value = { value || displayText } />
+	return (
+		<span>
+			<DisplayText />
+			{ action ? <TextAction { ...action } textNode = { DisplayText } /> : <></> }
+		</span>
+	)
+}
+
+type TextActionProps = {
+	icon: () => JSX.Element
+	textNode: () => JSX.Element
+	label: string
+	onClick?: JSX.MouseEventHandler<HTMLButtonElement>
+}
+
+const TextAction = ({ textNode: DisplayText, icon: ActionIcon, label, onClick }: TextActionProps) => {
+	return (
+		<button type = 'button' onClick = { onClick } value = { '' } tabIndex = { 1 }>
+			<DisplayText />
+			<span>
+				<ActionIcon />
+				<span>{ label }</span>
+			</span>
+		</button>
+	)
+}
+
