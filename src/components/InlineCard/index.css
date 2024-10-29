@@ -22,12 +22,13 @@
 	border-radius: 0.15em;
 	min-width: calc(var(--image-size) + var(--min-text-width) + (var(--bg-inline-padding) * 2));
 
+	> data { min-width: var(--min-text-width) }
+
 	data {
 		line-height: 1em;
 		color: var(--text-color);
 		padding-inline: 0.25em;
 		text-align: center;
-		min-width: var(--min-text-width);
 		pointer-events: none;
 	}
 
