@@ -16,7 +16,7 @@ export const DemoPage = () => {
 
 	return (
 		<Layout>
-			<p style = { { color: '#aaa', marginBottom: '0.5em', marginTop: '2em' } }>Standalone</p>
+			<p style = { { color: '#aaa', marginBottom: '0.5em', marginTop: '2em' } }>Standalone component</p>
 			<Resizer style = { { maxWidth: '50ch' } }>
 				<p>
 					<InlineCard { ...addressProps } onEditClicked = { () => confirm('Save changes?') } />
