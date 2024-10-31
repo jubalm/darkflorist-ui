@@ -1,5 +1,5 @@
 .inline-card {
-	--bg-color: #444;
+	--bg-color: var(--card-bg-color);
 	--button-color: #77738ccc;
 	--button-color-hilite: white;
 	--bg-inline-padding: 4px;
@@ -12,13 +12,13 @@
 	font: inherit;
 	display: inline-grid;
 	align-items: baseline;
-	grid-template-columns: [start] minmax(0, min-content) [copy] minmax(0, min-content) [end];
+	grid-template-columns: minmax(0, min-content) [start] minmax(0, min-content) [copy] minmax(0, min-content) [end] minmax(0, min-content);
 	grid-template-rows: [start] min-content [end];
 
 	margin-block: 1px;
 	padding-inline: var(--bg-inline-padding);
 	padding-block: var(--bg-block-padding);
-	background: var(--bg-color);
+	background: var(--bg-status-color, var(--bg-color));
 	border-radius: 0.15em;
 	min-width: calc(var(--image-size) + var(--min-text-width) + (var(--bg-inline-padding) * 2));
 
@@ -37,6 +37,11 @@
 	[role=img] :only-child {
 		display: inline-block;
 		vertical-align: -0.15em;
+
+		&:is(img) {
+			aspect-ratio: 1;
+			max-width: var(--image-size);
+		}
 	}
 
 	> [role=img] { grid-area: start / start / end / copy }
@@ -44,7 +49,7 @@
 	> data { grid-area: start / copy / end / end }
 
 	> [role=menu] {
-		background: var(--bg-color);
+		background: var(--bg-status-color, var(--bg-color));
 		display: inline-grid;
 		grid-area: start / start / end / end;
 		grid-template-columns: minmax(0, max-content) max-content;
@@ -67,6 +72,8 @@
 			cursor: pointer;
 			pointer-events: all;
 
+			&:is(button + *) { margin-left: 0.25em }
+
 			> :has(data) { overflow: hidden }
 
 			> :has(svg):has(span) {
@@ -77,7 +84,6 @@
 				border-radius: 3px;
 				padding: 0 0.25em;
 				vertical-align: text-bottom;
-				margin-left: 0.25em;
 
 				svg {
 					display: inline-block;
@@ -90,7 +96,7 @@
 					font-weight: bold;
 					font-size: 0.8em;
 					vertical-align: 0.05em;
-					padding-block: 0.125em;
+					/* padding-block: 0.125em; */
 				}
 
 				&:is(:is(:hover,:focus) > *) {
@@ -125,5 +131,19 @@
 			margin-left: 0.25em;
 			font-weight: 500;
 		}
+	}
+
+	&:has([role=alert]) {
+		--bg-status-color: #c05858; /* dark red */
+		min-width: calc(var(--image-size) + var(--min-text-width) + (var(--bg-inline-padding) * 2) + 4ch);
+
+	}
+
+	[role=alert] {
+		color: #e6cb1f; /* bright yellow */
+		cursor: pointer;
+
+		&:has(+ *) { margin-right: 0.25em }
+		&:is(* + [role=alert]) { margin-left: 0.25em }
 	}
 }

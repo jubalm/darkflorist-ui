@@ -118,28 +118,6 @@
 			}
 		}
 	}
-
-	> [role=status] {
-		grid-area: top / left / bottom / right;
-		display: grid;
-		grid-template-columns: min-content min-content;
-		place-content: center;
-		column-gap: 0.25em;
-		margin-inline: calc(var(--x-space) * -1);
-		margin-block: calc(var(--y-space) * -1);
-		border-radius: var(--edge-roundness);
-		align-items: center;
-		background: var(--status-backdrop-color);
-		color: var(--status-success-color);
-		outline: 1px solid opacity(var(--status-success-color));
-
-		svg { grid-column: 2 / 3 }
-		span { 
-			grid-column: 3 / 4;
-			font-size: 0.875em;
-		}
-
-	}
 }
 
 .tooltip {
@@ -152,5 +130,4 @@
 	white-space: nowrap;
 	pointer-events: none;
 	margin: 0;
-	/* transform: translate(-50%; 0.5em); */
 }

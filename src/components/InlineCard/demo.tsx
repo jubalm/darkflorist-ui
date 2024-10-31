@@ -16,10 +16,10 @@ export const DemoPage = () => {
 
 	return (
 		<Layout>
-			<p style = { { color: '#aaa', marginBottom: '0.5em', marginTop: '2em' } }>Vertical spacing when wrapped</p>
+			<p style = { { color: '#aaa', marginBottom: '0.5em', marginTop: '2em' } }>Standalone</p>
 			<Resizer style = { { maxWidth: '50ch' } }>
 				<p>
-					<InlineCard { ...addressProps } />
+					<InlineCard { ...addressProps } onEditClicked = { () => confirm('Save changes?') } />
 				</p>
 			</Resizer>
 
@@ -38,16 +38,16 @@ export const DemoPage = () => {
 			<p style = { { color: '#aaa', marginBottom: '0.5em', marginTop: '2em' } }>Example with constrained widths</p>
 			<Resizer>
 				<p>
-					<InlineCard label = 'lll' icon = { addressProps.icon } copyValue = '0x111' />{ ' ' }
+					<InlineCard label = 'lll' icon = { addressProps.icon } copyValue = '0x111' onEditClicked = { () => confirm('Save?') } />{ ' ' }
 					<InlineCard label = 'ETH' icon = { addressProps.icon } copyValue = '0x000' />{ ' ' }
-					<InlineCard label = 'USDT' icon = { addressProps.icon } copyValue = '0x123' />{ ' ' }
+					<InlineCard label = 'USDT' icon = { addressProps.icon } copyValue = '0x123' onEditClicked = { () => confirm('Save?') } />{ ' ' }
 				</p>
 			</Resizer>
 
 			<p style = { { color: '#aaa', marginBottom: '0.5em', marginTop: '2em' } }>Vertical spacing when wrapped</p>
 			<Resizer style = { { maxWidth: '50ch' } }>
 				<p>
-					<InlineCard { ...addressProps } />
+					<InlineCard { ...addressProps } onEditClicked = { () => confirm('Save?') } />
 					<InlineCard { ...addressProps } />
 					<InlineCard { ...addressProps } />
 				</p>
