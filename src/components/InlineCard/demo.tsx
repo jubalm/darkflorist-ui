@@ -43,14 +43,6 @@ export const DemoPage = () => {
 				<p>Example address inline with text <InlineCard { ...addressProps } /> within a paragraph.</p>
 			</Resizer>
 
-			<p style = { { color: '#aaa', marginBottom: '0.5em', marginTop: '2em' } }>Example with constrained widths</p>
-			<Resizer>
-				<p>
-					<InlineCard label = 'ETH' icon = { addressProps.icon } copyValue = '0x000' />{ ' ' }
-					<InlineCard label = 'USDT' icon = { addressProps.icon } copyValue = '0x123' onEditClicked = { () => confirm('Save?') } />{ ' ' }
-				</p>
-			</Resizer>
-
 			<p style = { { color: '#aaa', marginBottom: '0.5em', marginTop: '2em' } }>Vertical spacing when wrapped</p>
 			<Resizer style = { { maxWidth: '50ch' } }>
 				<p>

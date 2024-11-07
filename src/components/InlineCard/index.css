@@ -1,5 +1,5 @@
 .inline-card {
-	--bg-color: var(--card-bg-color);
+	--bg-color: transparent;
 	--button-color: #77738ccc;
 	--button-color-hilite: white;
 	--bg-inline-padding: 4px;
@@ -42,9 +42,15 @@
 		}
 	}
 
-	> [role=img] { grid-area: start / start / end / copy }
+	> [role=img] { 
+		grid-area: start / start / end / copy;
+		:focus-within > &, :hover > & { opacity: 0 }
+	}
 
-	> data { grid-area: start / copy / end / end }
+	> data { 
+		grid-area: start / copy / end / end;
+		:focus-within > &, :hover > & { opacity: 0 }
+	}
 
 	> [role=menu] {
 		background: var(--bg-status-color, var(--bg-color));
@@ -54,7 +60,7 @@
 		align-items: baseline;
 
 		opacity: 0;
-		&:has(:hover), &:focus-within { opacity: 1 }
+		:hover > &, :focus-within > & { opacity: 1 }
 
 		> button {
 			font: inherit;
