@@ -14,35 +14,38 @@ export type InlineCardProps = {
 	onEditClicked?: JSX.MouseEventHandler<HTMLButtonElement>
 	statusMessageDuration?: number
 	warningMessage?: string
+	noExandButtons?: boolean
 }
 
-export const InlineCard = ({ icon: Icon, label, copyValue, noCopy, onEditClicked, style, statusMessageDuration = 1500, warningMessage: warningMessage }: InlineCardProps) => {
+export const InlineCard = (props: InlineCardProps) => {
 	const tooltip = useSignal<TooltipConfig | undefined>(undefined)
 
 	const copyTextToClipboard = async (event: JSX.TargetedMouseEvent<HTMLButtonElement>) => {
 		event.currentTarget.blur()
-		await clipboardCopy(event.currentTarget.value || label)
-		tooltip.value = { message: 'Copied!',  x: event.clientX, y: event.clientY, duration: statusMessageDuration }
+		await clipboardCopy(event.currentTarget.value || props.label)
+		tooltip.value = { message: 'Copied!', x: event.clientX, y: event.clientY, duration: props.statusMessageDuration }
 	}
 
+	const Icon = props.icon
+
 	return (
-		<span class = 'inline-card' role = 'figure' style = { style } title = { label }>
-			{ warningMessage ? <WarningSign /> : <></> }
-			<span role = 'img'><Icon /></span>
-			<data class = 'truncate text-legible' value = { label }>{label}</data>
-			<span role = 'menu'>
-				{ !noCopy ? (
-					<button type = 'button' onClick = { copyTextToClipboard } value = { copyValue } tabIndex = { 1 }>
-					<span role = 'img'><Icon /></span>
-					<span><data class = 'truncate text-legible' value = { label }>{label}</data></span>
-					<span>
-						<CopyIcon />
-						<span>copy</span>
-					</span>
-				</button>
+		<span class='inline-card' role='figure' style={ props.style } title={ props.label }>
+			{ props.warningMessage ? <WarningSign /> : <></> }
+			<span role='img'><Icon /></span>
+			<data class='truncate text-legible' value={ props.label }>{ props.label }</data>
+			<span role='menu' aria-label={props.noExandButtons ? undefined : "Spell-out actions"}>
+				{ !props.noCopy ? (
+					<button type='button' onClick={ copyTextToClipboard } value={ props.copyValue } tabIndex={ 1 }>
+						<span role='img'><Icon /></span>
+						<span><data class='truncate text-legible' value={ props.label }>{ props.label }</data></span>
+						<span>
+							<CopyIcon />
+							<span>copy</span>
+						</span>
+					</button>
 				) : <></> }
-				{ onEditClicked ? (
-					<button type = 'button' value = { copyValue } onClick = { onEditClicked } tabIndex = { 1 }>
+				{ props.onEditClicked ? (
+					<button type='button' value={ props.copyValue } onClick={ props.onEditClicked } tabIndex={ 1 }>
 						<span>
 							<EditIcon />
 							<span>edit</span>
@@ -50,12 +53,12 @@ export const InlineCard = ({ icon: Icon, label, copyValue, noCopy, onEditClicked
 					</button>
 				) : <></> }
 			</span>
-			{ warningMessage ? <WarningSign /> : <></> }
-			<Tooltip config = { tooltip } />
+			{ props.warningMessage ? <WarningSign /> : <></> }
+			<Tooltip config={ tooltip } />
 		</span>
 	)
 }
 
 const WarningSign = ({ message = 'Warning' }: { message?: string }) => {
-	return <span role = 'alert' title = { message }>⚠</span>
+	return <span role='alert' title={ message }>⚠</span>
 }

@@ -6,8 +6,6 @@
 	--bg-block-padding: 1px;
 	--image-size: 1em;
 	--min-text-width: 5.5ch;
-	--status-backdrop-color: #303030ed;
-	--status-success-color: #4fb64f;
 
 	font: inherit;
 	display: inline-grid;
@@ -96,7 +94,6 @@
 					font-weight: bold;
 					font-size: 0.8em;
 					vertical-align: 0.05em;
-					/* padding-block: 0.125em; */
 				}
 
 				&:is(:is(:hover,:focus) > *) {
@@ -104,32 +101,12 @@
 					background: var(--button-color-hilite);
 					outline: none;
 
-					svg { display: none }
-					span { display: inline-block }
+					&:is([aria-label="Spell-out actions"] *) {
+						svg { display: none }
+						span { display: inline-block }
+					}
 				}
 			}
-		}
-	}
-
-	[role=status] {
-		grid-area: start / start / end / end;
-		background: var(--status-backdrop-color);
-		text-align: center;
-		border-radius: 0.15em;
-		position: relative;
-		margin-inline: calc(var(--bg-inline-padding) * -1 + 1px);
-		color: var(--status-success-color);
-
-		> svg {
-			display: inline-block;
-			vertical-align: -0.15em;
-		}
-
-		> span {
-			display: inline-block;
-			font-size: 0.8em;
-			margin-left: 0.25em;
-			font-weight: 500;
 		}
 	}
 

@@ -26,7 +26,7 @@ export const DemoPage = () => {
 					} }
 					note = { {
 						displayText: address,
-						value: address
+						value: address,
 					} }
 					icon = { { component: () => <Blockie address = { addressBigInt } /> } }
 				/>
@@ -37,6 +37,15 @@ export const DemoPage = () => {
 				<MultilineCard 
 					label = { { displayText: address } }
 					note = { { displayText: '(Not in addressbook)', action: { label: 'Edit', icon: () => <EditIcon />, onClick: () => { alert('Adding...') } } } } 
+					icon = { { component: () => <Blockie address = { addressBigInt } /> } } 
+				/>
+			</Resizer>
+
+			<p style = { { color: '#aaa', marginBottom: '0.5em', marginTop: '2rem' } }>No action</p>
+			<Resizer>
+				<MultilineCard 
+					label = { { displayText: 'known address', action: 'noaction' } }
+					note = { { displayText: address, action: 'noaction' } } 
 					icon = { { component: () => <Blockie address = { addressBigInt } /> } } 
 				/>
 			</Resizer>

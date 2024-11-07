@@ -4,7 +4,6 @@ import { clipboardCopy } from '~/utils/copy-to-clipboard.js'
 import './index.css'
 import { Tooltip, TooltipConfig } from '../Tooltip'
 import { CopyIcon } from '../Icons'
-import { deepMerge } from '~/utils/objects'
 
 export type CardIcon = {
 	component: () => JSX.Element
@@ -38,8 +37,8 @@ export const MultilineCard = ({ icon, label, note, style }: MultilineCardProps) 
 				<span role = 'img'>
 					<button type = 'button' onClick = { icon.onClick || copyTextToClipboard } tabIndex = { -1 } title = { icon.tooltipText || label.displayText }><CardIcon /></button>
 				</span>
-				<ActionableText { ...label } action = { deepMerge(defaultAction, label.action || {}) } />
-				<ActionableText { ...note } action = { deepMerge(defaultAction, note.action || {}) } />
+				<ActionableText { ...label } action = { !label.action ? defaultAction : label.action } />
+				<ActionableText { ...note } action = { !note.action ? defaultAction : note.action } />
 			</figure>
 			<Tooltip config = { tooltipConfig }  />
 		</>
@@ -55,7 +54,7 @@ type TextAction = {
 type ActionableTextProps = {
 	displayText: string
 	value?: string
-	action?: TextAction
+	action?: TextAction | 'noaction'
 }
 
 type TextNodeProps = { 
@@ -70,7 +69,7 @@ const ActionableText = ({ displayText, value, action }: ActionableTextProps) => 
 	return (
 		<span>
 			<DisplayText />
-			{ action ? <TextAction { ...action } textNode = { DisplayText } /> : <></> }
+			{ action && action !== 'noaction' ? <TextAction { ...action } textNode = { DisplayText } /> : <></> }
 		</span>
 	)
 }

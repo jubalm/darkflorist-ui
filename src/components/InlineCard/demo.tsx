@@ -30,6 +30,14 @@ export const DemoPage = () => {
 				</p>
 			</Resizer>
 
+			<p style = { { color: '#aaa', marginBottom: '0.5em', marginTop: '2em' } }>Don't spell-out buttons</p>
+			<Resizer>
+				<p>
+					<InlineCard label = 'lll' icon = { addressProps.icon } copyValue = '0x111' onEditClicked = { () => confirm('Save?') } noExandButtons style = { { '--min-text-width': '3ch' } } />{ ' ' }
+					<InlineCard label = 'USDT' icon = { addressProps.icon } copyValue = '0x111' onEditClicked = { () => confirm('Save?') } noExandButtons style = { { '--min-text-width': '3ch' } } />{ ' ' }
+				</p>
+			</Resizer>
+
 			<p style = { { color: '#aaa', marginBottom: '0.5em', marginTop: '2em' } }>Address inline with text</p>
 			<Resizer>
 				<p>Example address inline with text <InlineCard { ...addressProps } /> within a paragraph.</p>
@@ -38,7 +46,6 @@ export const DemoPage = () => {
 			<p style = { { color: '#aaa', marginBottom: '0.5em', marginTop: '2em' } }>Example with constrained widths</p>
 			<Resizer>
 				<p>
-					<InlineCard label = 'lll' icon = { addressProps.icon } copyValue = '0x111' onEditClicked = { () => confirm('Save?') } />{ ' ' }
 					<InlineCard label = 'ETH' icon = { addressProps.icon } copyValue = '0x000' />{ ' ' }
 					<InlineCard label = 'USDT' icon = { addressProps.icon } copyValue = '0x123' onEditClicked = { () => confirm('Save?') } />{ ' ' }
 				</p>
