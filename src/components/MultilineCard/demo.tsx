@@ -18,36 +18,43 @@ export const DemoPage = () => {
 				<MultilineCard
 					label = { { 
 						displayText: generateName(),
-						action: {
-							label: 'Edit',
-							icon: () => <EditIcon />,
-							onClick: () => alert('Editing...')
-						}
+						action: { label: 'Edit', icon: () => <EditIcon />, onClick: () => alert('Editing...') }
 					} }
 					note = { {
 						displayText: address,
-						value: address,
+						action: 'clipboard-copy',
 					} }
-					icon = { { component: () => <Blockie address = { addressBigInt } /> } }
+					icon = { { icon: () => <Blockie address = { addressBigInt } />, action: 'clipboard-copy', copyValue: address } }
 				/>
 			</Resizer>
 
 			<p style = { { color: '#aaa', marginBottom: '0.5em', marginTop: '2rem' } }>Unknown address</p>
 			<Resizer>
 				<MultilineCard 
-					label = { { displayText: address } }
+					label = { { displayText: address, action: 'clipboard-copy', copyValue: address } }
 					note = { { displayText: '(Not in addressbook)', action: { label: 'Edit', icon: () => <EditIcon />, onClick: () => { alert('Adding...') } } } } 
-					icon = { { component: () => <Blockie address = { addressBigInt } /> } } 
+					icon = { { icon: () => <Blockie address = { addressBigInt } />, action: 'clipboard-copy', copyValue: address } } 
 				/>
 			</Resizer>
 
 			<p style = { { color: '#aaa', marginBottom: '0.5em', marginTop: '2rem' } }>No action</p>
 			<Resizer>
 				<MultilineCard 
-					label = { { displayText: 'known address', action: 'noaction' } }
-					note = { { displayText: address, action: 'noaction' } } 
-					icon = { { component: () => <Blockie address = { addressBigInt } /> } } 
+					label = { { displayText: 'known address' } }
+					note = { { displayText: address } } 
+					icon = { { icon: () => <Blockie address = { addressBigInt } /> } } 
 				/>
+			</Resizer>
+
+			<p style = { { color: '#aaa', marginBottom: '0.5em', marginTop: '2rem' } }>In Button</p>
+			<Resizer>
+				<button style = {{ font: 'inherit', padding: '5px 6px', border: 0, cursor: 'pointer' }}>
+					<MultilineCard 
+						label = { { displayText: 'known address' } }
+						note = { { displayText: address } } 
+						icon = { { icon: () => <Blockie address = { addressBigInt } /> } } 
+					/>
+				</button>
 			</Resizer>
 		</Layout>
 	)

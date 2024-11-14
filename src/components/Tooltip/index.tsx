@@ -1,5 +1,6 @@
 import { Signal, useSignalEffect } from '@preact/signals'
 import { useRef } from 'preact/hooks'
+import './index.css'
 
 export type TooltipConfig = {
   message: string

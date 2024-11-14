@@ -1,25 +1,25 @@
 .multiline-card {
-	--bg-color: #444;
+	--bg-color: transparent;
 	--button-color: #77738ccc;
 	--image-size: 2.25rem;
-	--min-text-width: 5.5ch;
-	--x-space: 0.5rem;
-	--y-space: 0.425rem;
+	--min-text-width: 0;
+	--pad-x: 0;
+	--pad-y: 0;
+	--gap-x: 0.5rem;
+	--gap-y: 0.0625rem;
 	--edge-roundness: 3px;
-	--status-backdrop-color: #303030ed;
-	--status-success-color: #4fb64f;
 
 	font: inherit;
 	display: inline-grid;
 	grid-template-columns: [left] minmax(0, min-content) [data] minmax(0, max-content) [right];
 	grid-template-rows: [top] min-content [sub] min-content [bottom];
-	column-gap: var(--x-space);
-	row-gap: 2px;
-	padding-block: var(--y-space);
-	padding-inline: var(--x-space);
+	column-gap: var(--gap-x);
+	row-gap: var(--gap-y);
+	padding-block: var(--pad-y);
+	padding-inline: var(--pad-x);
 	background-color: var(--bg-color);
 	border-radius: var(--edge-roundness);
-	min-width: calc(var(--min-text-width) + var(--image-size) + (var(--x-space) * 3));
+	min-width: calc(var(--min-text-width) + var(--image-size) + (var(--pad-x) * 2) + var(--gap-x));
 
 	data {
 		line-height: 1em;
@@ -33,8 +33,8 @@
 		background: var(--bg-color);
 		border: 0 none;
 		padding: 0;
-		cursor: pointer;
 
+		&:not(:disabled) { cursor: pointer }
 		&:hover, &:focus { background: var(--bg-color) }
 	}
 
@@ -73,7 +73,13 @@
 			}
 		}
 
-		> data { grid-area: top / left / bottom / right }
+		> data { 
+			grid-area: top / left / bottom / right;
+
+			&:not(:has(+:disabled)) {
+				.multiline-card:hover &, .multiline-card:focus-within & { visibility: hidden }
+			}
+		}
 
 		> button {
 			grid-area: top / left / bottom / right;
@@ -81,11 +87,13 @@
 			align-items: baseline;
 			grid-template-columns: minmax(0, 1fr) min-content;
 			background-color: var(--bg-color);
-			opacity: 0;
 			outline: none;
+			position: relative;
+			visibility: hidden;
 
-			.multiline-card:hover &, .multiline-card:focus-within & { opacity: 1 }
-			/* &:is(.multiline-card:hover *, .multiline-card:focus-within *) { opacity: 1 } */
+			&:not(:disabled) {
+				.multiline-card:hover &, .multiline-card:focus-within & { visibility: visible }
+			}
 
 			&:hover, &:focus {
 				> span {
